@@ -1,6 +1,6 @@
 Story Game
 ==========
-A rails based adaptation of a game involving a piece of paper being passed around to create a story
+A web based adaptation of a game involving a piece of paper being passed around to create a story
 Rules
 -----
 * A group of three or more people starts with a blank sheet of paper
