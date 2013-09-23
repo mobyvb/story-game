@@ -5,9 +5,9 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -26,10 +26,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
+  mongoose.connect('mongodb://localhost/story-game');
+}
+
+//production only
+else if ('production' == app.get('env')) {
+  //mongoose.connect('');
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/validpass', routes.validPassword);
+app.get('/signup', routes.signup);
+app.post('/signup', routes.createUser);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

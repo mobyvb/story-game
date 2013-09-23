@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  form(action='./signup', method='post')
+    label Username
+    input(type='text', name='username')
+    br
+    label Password
+    input(type='password', name='password')
+    br
+    input(type='submit')
