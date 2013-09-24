@@ -35,7 +35,6 @@ else if ('production' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/validpass', routes.validPassword);
 app.get('/signup', routes.signup);
 app.post('/signup', routes.createUser);
 
