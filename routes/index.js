@@ -9,7 +9,7 @@ exports.index = function(req, res) {
   User.find(function(err, users) {
     res.send(users);
   });
-  //res.render('index', { title: 'Express' });
+  // res.render('index', { title: 'story game' });
 };
 
 exports.signup = function(req, res) {
@@ -17,6 +17,8 @@ exports.signup = function(req, res) {
 };
 
 exports.createUser = function(req, res) {
-  new User({username: req.body.username, password: req.body.password}).save();
-  res.render('index', { title: 'Home' });
+  new User({username: req.body.username, password: req.body.password}).save(function(err) {
+    if(err) res.render('signup', {title: 'Sign Up', errors:true})
+    else res.render('index', {title: 'story game'});
+  });
 };

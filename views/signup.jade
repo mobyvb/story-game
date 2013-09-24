@@ -3,6 +3,8 @@ extends layout
 block content
   h1= title
   form(action='./signup', method='post')
+    - if(errors)
+      p(style='color:red') there were errors
     label Username
     input(type='text', name='username')
     br
