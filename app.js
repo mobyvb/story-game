@@ -46,6 +46,8 @@ app.get('/session/set/:value', function(req, res) {
 app.get('/session/get', function(req, res) {
   res.send(req.session.whatever);
 });
+app.get('/newpost', routes.createPost);
+app.get('/showpostuser', routes.showPostUser);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
