@@ -2,3 +2,7 @@ extends layout
 
 block content
   h1= title
+  -if(user)
+    h2= 'welcome, ' + user.username
+  -else
+    a(href='/signin') sign in

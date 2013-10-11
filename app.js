@@ -39,6 +39,9 @@ else if ('production' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/signup', routes.signup);
 app.post('/signup', routes.createUser);
+app.get('/signin', routes.signin);
+app.post('/signin', routes.setUser);
+app.get('/signout', routes.signout);
 app.get('/session/set/:value', function(req, res) {
   req.session.whatever = req.params.value;
   res.send('sup');
