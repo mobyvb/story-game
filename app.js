@@ -4,7 +4,7 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
+  , users = require('./controllers/UserController.js')
   , http = require('http')
   , path = require('path');
 var mongoose = require('mongoose');
@@ -36,21 +36,12 @@ else if ('production' == app.get('env')) {
   //mongoose.connect('');
 }
 
-app.get('/', routes.index);
-app.get('/signup', routes.signup);
-app.post('/signup', routes.createUser);
-app.get('/signin', routes.signin);
-app.post('/signin', routes.setUser);
-app.get('/signout', routes.signout);
-app.get('/session/set/:value', function(req, res) {
-  req.session.whatever = req.params.value;
-  res.send('sup');
-});
-app.get('/session/get', function(req, res) {
-  res.send(req.session.whatever);
-});
-app.get('/newpost', routes.createPost);
-app.get('/showpostuser', routes.showPostUser);
+app.get('/', users.profile);
+app.get('/signup', users.signup);
+app.post('/signup', users.createUser);
+app.get('/signin', users.signin);
+app.post('/signin', users.setUser);
+app.get('/signout', users.signout);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

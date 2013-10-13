@@ -4,5 +4,6 @@ block content
   h1= title
   -if(user)
     h2= 'welcome, ' + user.username
+    a(href='/signout') sign out
   -else
     a(href='/signin') sign in
