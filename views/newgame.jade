@@ -1,0 +1,11 @@
+h2 New game
+form(action='./game', method='post')
+  -user.friends.forEach(function(friend) {
+    label
+      input(type='checkbox', name='friends', value=friend)
+      =friend
+    br
+  -})
+  input(type='number', name='turnsPer', min='1')
+  br
+  input(type='submit')

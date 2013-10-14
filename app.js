@@ -5,6 +5,7 @@
 
 var express = require('express')
   , users = require('./controllers/UserController.js')
+  , games = require('./controllers/GameController.js')
   , http = require('http')
   , path = require('path');
 var mongoose = require('mongoose');
@@ -41,6 +42,7 @@ app.post('/signup', users.signup);
 app.post('/signin', users.signin);
 app.get('/signout', users.signout);
 app.post('/addfriend', users.addFriend);
+app.post('/game', games.createGame)
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
