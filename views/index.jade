@@ -12,11 +12,7 @@ block content
         li= friend
       -})
 
-    form(action='./addfriend', method='post')
-      h3 add friend
-      label Username
-      input(type='text', name='username')
-      br
-      input(type='submit')
+    include addfriend
   -else
-    a(href='/signin') sign in
+    include signin
+    include signup

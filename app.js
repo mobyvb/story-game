@@ -36,11 +36,9 @@ else if ('production' == app.get('env')) {
   //mongoose.connect('');
 }
 
-app.get('/', users.profile);
-app.get('/signup', users.signup);
-app.post('/signup', users.createUser);
-app.get('/signin', users.signin);
-app.post('/signin', users.setUser);
+app.get('/', users.index);
+app.post('/signup', users.signup);
+app.post('/signin', users.signin);
 app.get('/signout', users.signout);
 app.post('/addfriend', users.addFriend);
 

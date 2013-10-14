@@ -1,34 +1,35 @@
 var User = require('../models/User.js');
 
-exports.profile = function(req, res) {
+exports.index = function(req, res) {
   User.findOne({username:req.session.username}, function(err, user) {
     res.render('index', {title: 'story game', user: user});
   });
 };
 
 exports.signup = function(req, res) {
-  res.render('signup', { title: 'Sign Up' });
-};
-
-exports.createUser = function(req, res) {
   new User({username: req.body.username, password: req.body.password}).save(function(err) {
-    if(err) res.render('signup', {title: 'Sign Up', errors:true})
+    if(err) {
+      console.log(err);
+      res.redirect('/');
+    }
     else {
-      res.render('signin', {title: 'Sign in'});
+      res.redirect('/');
     }
   });
 };
 
 exports.signin = function(req, res) {
-  res.render('signin', { title: 'Sign in' });
-};
-
-exports.setUser = function(req, res) {
   User.findOne({username:req.body.username}, function(err, user) {
     user.comparePassword(req.body.password, function(err, isMatch) {
-      if(err) res.render('signin', {title: 'Sign in', errors:true});
-      else {
+      if(err) {
+        console.log(err);
+        res.redirect('/');
+      }
+      else if(isMatch) {
         req.session.username = user.username;
+        res.redirect('/');
+      }
+      else {
         res.redirect('/');
       }
     });
