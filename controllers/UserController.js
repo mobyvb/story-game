@@ -52,6 +52,7 @@ exports.addFriend = function(req, res) {
           if(currUser.friends.indexOf(friendName) === -1) {
             currUser.friends.push(friendName);
             currUser.save();
+            res.redirect('/');
           }
           else {
             console.log('already friends');
@@ -63,5 +64,4 @@ exports.addFriend = function(req, res) {
       console.log('user doesn\'t exist');
     }
   });
-  res.redirect('/');
 };
