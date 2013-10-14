@@ -5,5 +5,18 @@ block content
   -if(user)
     h2= 'welcome, ' + user.username
     a(href='/signout') sign out
+
+    h3 friends
+    ul
+      -user.friends.forEach(function(friend) {
+        li= friend
+      -})
+
+    form(action='./addfriend', method='post')
+      h3 add friend
+      label Username
+      input(type='text', name='username')
+      br
+      input(type='submit')
   -else
     a(href='/signin') sign in

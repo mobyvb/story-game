@@ -42,6 +42,7 @@ app.post('/signup', users.createUser);
 app.get('/signin', users.signin);
 app.post('/signin', users.setUser);
 app.get('/signout', users.signout);
+app.post('/addfriend', users.addFriend);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

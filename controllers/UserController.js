@@ -1,7 +1,9 @@
 var User = require('../models/User.js');
 
 exports.profile = function(req, res) {
-  res.render('index', {title: 'story game', user: req.session.user});
+  User.findOne({username:req.session.username}, function(err, user) {
+    res.render('index', {title: 'story game', user: user});
+  });
 };
 
 exports.signup = function(req, res) {
@@ -22,11 +24,11 @@ exports.signin = function(req, res) {
 };
 
 exports.setUser = function(req, res) {
-  User.find({username:req.body.username}, function(err, user) {
-    user[0].comparePassword(req.body.password, function(err, isMatch) {
+  User.findOne({username:req.body.username}, function(err, user) {
+    user.comparePassword(req.body.password, function(err, isMatch) {
       if(err) res.render('signin', {title: 'Sign in', errors:true});
       else {
-        req.session.user = user[0];
+        req.session.username = user.username;
         res.redirect('/');
       }
     });
@@ -34,6 +36,32 @@ exports.setUser = function(req, res) {
 };
 
 exports.signout = function(req, res) {
-  req.session.user = undefined;
+  req.session.username = undefined;
+  res.redirect('/');
+};
+
+exports.addFriend = function(req, res) {
+  var currUserName = req.session.username;
+  var friendName = req.body.username;
+  User.findOne({username:friendName}, function(err, friend) {
+    if(err) console.log(err);
+    else if(friend) {
+      User.findOne({username:currUserName}, function(err, currUser) {
+        if(err) console.log(err);
+        else {
+          if(currUser.friends.indexOf(friendName) === -1) {
+            currUser.friends.push(friendName);
+            currUser.save();
+          }
+          else {
+            console.log('already friends');
+          }
+        }
+      });
+    }
+    else {
+      console.log('user doesn\'t exist');
+    }
+  });
   res.redirect('/');
 };
