@@ -1,4 +1,5 @@
 var Game = require('../models/Game.js');
+var Sentence = require('../models/Sentence.js');
 
 exports.index = function(req, res) {
 
