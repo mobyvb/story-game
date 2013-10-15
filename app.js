@@ -42,7 +42,8 @@ app.post('/signup', users.signup);
 app.post('/signin', users.signin);
 app.get('/signout', users.signout);
 app.post('/addfriend', users.addFriend);
-app.post('/game', games.createGame)
+app.post('/game/new', games.createGame);
+app.post('/game', games.addSentence);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

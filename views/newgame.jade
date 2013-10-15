@@ -1,5 +1,5 @@
 h2 New game
-form(action='./game', method='post')
+form(action='./game/new', method='post')
   -user.friends.forEach(function(friend) {
     label
       input(type='checkbox', name='friends', value=friend)

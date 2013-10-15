@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var SentenceSchema = new Schema({
-  game: {type: Schema.ObjectId, required: true, index: {unique: true}},
+  game: {type: Schema.ObjectId, required: true, index: {unique: false}},
   player: {type: String, required: true},
   content: {type: String, required: true},
   created_at: {type: Date}
