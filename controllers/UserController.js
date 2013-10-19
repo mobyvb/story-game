@@ -1,8 +1,28 @@
 var User = require('../models/User.js');
+var Game = require('../models/Game.js');
+var Sentence = require('../models/Sentence.js');
 
 exports.index = function(req, res) {
   User.findOne({username:req.session.username}, function(err, user) {
-    res.render('index', {title: 'story game', user: user});
+    var games = [];
+    if(req.session.username) {
+      user.games.forEach(function(game, index, array) {
+        var lastSentence = Sentence.find({game:game})
+        .sort({created_at:'desc'}).limit(1)
+        .exec(
+          function(err, sentence) {
+            console.log(sentence);
+            games.push({id:game, sentence:sentence[0].content});
+            if(index+1 === array.length) {
+              res.render('index', {title: 'story game', user: user, games: games});
+            }
+          }
+        );
+      });
+    }
+    else {
+      res.render('index', {title: 'story game', user: user, games: games});
+    }
   });
 };
 
