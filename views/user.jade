@@ -1,18 +1,23 @@
 extends layout
 
 block content
-  h2= 'welcome, ' + user.username
-  a(href='/signout') sign out
+  header
+    h1 story game
+    div.user-info
+      h2= 'welcome, ' + user.username
+      a(href='/signout') sign out
+  div.main-content
+    div.friends
+      h3 friends
+      ul
+        -user.friends.forEach(function(friend) {
+          li= friend
+        -})
+      include addfriend
 
-  h3 friends
-  ul
-    -user.friends.forEach(function(friend) {
-      li= friend
-    -})
+    div.games
+      include newgame
 
-  include addfriend
-  include newgame
-
-  -games.forEach(function(game) {
-    include game
-  -})
+      -games.forEach(function(game) {
+        include game
+      -})
