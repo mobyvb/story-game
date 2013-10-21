@@ -5,7 +5,7 @@ div.game
     p= game.sentence
     form(action='./game', method='post')
       input(type='hidden', name='gameId', value=game.id)
-      input(type='text', name='sentence')
+      textarea(name='sentence')
       br
       input(type='submit')
   -else
