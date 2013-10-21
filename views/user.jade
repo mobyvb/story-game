@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h2= 'welcome, ' + user.username
+  a(href='/signout') sign out
+
+  h3 friends
+  ul
+    -user.friends.forEach(function(friend) {
+      li= friend
+    -})
+
+  include addfriend
+  include newgame
+
+  -games.forEach(function(game) {
+    include game
+  -})

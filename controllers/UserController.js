@@ -6,22 +6,24 @@ exports.index = function(req, res) {
   User.findOne({username:req.session.username}, function(err, user) {
     var games = [];
     if(req.session.username) {
-      user.games.forEach(function(game, index, array) {
-        var lastSentence = Sentence.find({game:game})
-        .sort({created_at:'desc'}).limit(1)
-        .exec(
-          function(err, sentence) {
-            console.log(sentence);
+      if(user.games.length) {
+        user.games.forEach(function(game, index, array) {
+          var lastSentence = Sentence.find({game:game})
+          .sort({created_at:'desc'}).limit(1)
+          .exec(function(err, sentence) {
             games.push({id:game, sentence:sentence[0].content});
             if(index+1 === array.length) {
-              res.render('index', {title: 'story game', user: user, games: games});
+              res.render('user', {user: user, games: games});
             }
-          }
-        );
-      });
+          });
+        });
+      }
+      else {
+        res.render('user', {user: user, games: []})
+      }
     }
     else {
-      res.render('index', {title: 'story game', user: user, games: games});
+      res.render('index');
     }
   });
 };

@@ -1,24 +1,5 @@
 extends layout
 
 block content
-  h1= title
-  -if(user)
-    h2= 'welcome, ' + user.username
-    a(href='/signout') sign out
-
-    h3 friends
-    ul
-      -user.friends.forEach(function(friend) {
-        li= friend
-      -})
-
-    include addfriend
-    include newgame
-
-    -games.forEach(function(game) {
-      include game
-    -})
-
-  -else
-    include signin
-    include signup
+  include signin
+  include signup
