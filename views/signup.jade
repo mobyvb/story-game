@@ -1,9 +1,5 @@
-h2 Sign up
-form(action='./signup', method='post')
-  label Username
-  input(type='text', name='username')
-  br
-  label Password
-  input(type='password', name='password')
-  br
-  input(type='submit')
+form.form-signin(action='./signup', method='post')
+  h2.form-signin-heading Sign up
+  input.form-control.input-block-level(type='text', name='username', placeholder='Username', required)
+  input.form-control.input-block-level(type='password', name='password', placeholder='Password', required)
+  input.btn.btn-large.btn-primary(type='submit')
