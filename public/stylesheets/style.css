@@ -1,0 +1,10 @@
+.hero-unit {
+  margin-top: 30px;
+  background-color: #add8e6;
+}
+.hero-unit h1 {
+  margin: 0;
+}
+a.navbar-text {
+  color: #08c;
+}
