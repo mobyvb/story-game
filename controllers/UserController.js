@@ -7,19 +7,27 @@ exports.index = function(req, res) {
     var games = [];
     if(req.session.username) {
       if(user.games.length) {
-        user.games.forEach(function(game, index, array) {
-          var lastSentence = Sentence.find({game:game})
-          .sort({created_at:'desc'}).limit(1)
-          .exec(function(err, sentence) {
-            games.push({id:game, sentence:sentence[0].content});
-            if(index+1 === array.length) {
-              res.render('user', {user: user, games: games});
-            }
+        user.games.forEach(function(gameId, index, array) {
+          Game.findById(gameId, function(err, game) {
+            Sentence.find({game:gameId})
+            .sort({created_at:'desc'})
+            .limit(1)
+            .exec(function(err, sentence) {
+              games.push({
+                id:gameId,
+                sentence:sentence[0].content,
+                currentPlayer:game.players[game.currentPlayer],
+                players:game.players
+              });
+              if(index+1 === array.length) {
+                res.render('user', {user: user, games:games});
+              }
+            });
           });
         });
       }
       else {
-        res.render('user', {user: user, games: []})
+        res.render('user', {user:user, games:[]})
       }
     }
     else {
