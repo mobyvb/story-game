@@ -1,6 +1,4 @@
-h2 add friend
 form(action='./addfriend', method='post')
-  label Username
-  input(type='text', name='username')
-  br
-  input(type='submit')
+  h2 Add friend
+  input.form-control.input-block-level(type='text', name='username', placeholder='Username', required)
+  input.btn.btn-lg.btn-primary(type='submit')

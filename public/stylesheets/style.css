@@ -8,3 +8,36 @@
 a.navbar-text {
   color: #08c;
 }
+.form-group,
+.group {
+  margin: 10px 0;
+  padding: 5px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+label {
+  font-weight: bold;
+}
+.checkbox label {
+  font-weight: normal;
+}
+.navbar .user {
+  display: block;
+  line-height: 20px;
+  margin-top: 5px;
+}
+.navbar .signout {
+  display: block;
+  line-height: 20px;
+  margin-bottom: 5px;
+}
+.navbar .brand {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.navbar-inner {
+  height: 51px;
+}
+.row-fluid {
+  position: absolute;
+}

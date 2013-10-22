@@ -1,11 +1,15 @@
 h2 New game
 form(action='./game/new', method='post')
-  -user.friends.forEach(function(friend) {
-    label
-      input(type='checkbox', name='friends', value=friend)
-      =friend
-    br
-  -})
-  input(type='number', name='turnsPer', min='1')
-  br
-  input(type='submit')
+  div.form-group
+    label Select players for this game
+    div.checkbox
+      -user.friends.forEach(function(friend) {
+        label
+          input(type='checkbox', name='friends', value=friend)
+          =friend
+      -})
+  div.form-group
+    label Number of turns per player
+    input.form-control(type='number', name='turnsPer', min='1', id='turnsPer', required)
+
+  input.btn.btn-lg.btn-primary(type='submit')

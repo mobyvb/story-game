@@ -6,20 +6,25 @@ block content
       div.container
         p.brand story game
         div.pull-right
-          span.navbar-text= 'logged in as '+user.username+' '
-          a.navbar-text(href='/signout') sign out
+          span.navbar-text.user= 'logged in as '+user.username+' '
+          a.navbar-text.signout(href='/signout') sign out
 
   div.row-fluid
     div.span6.offset1
-      include newgame
-
-      -games.forEach(function(game) {
-        include game
-      -})
-    div.span4
-      h3 friends
-      ul
-        -user.friends.forEach(function(friend) {
-          li= friend
+      div.group
+        h2 Games
+        -games.forEach(function(game) {
+          div.group
+            include game
         -})
-      include addfriend
+      div.group
+        include newgame
+    div.span4
+      div.group
+        h2 Friends
+        ul
+          -user.friends.forEach(function(friend) {
+            li= friend
+          -})
+      div.group
+        include addfriend
