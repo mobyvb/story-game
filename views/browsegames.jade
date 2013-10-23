@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h2 Browse games
+
+  -for(var i=0; i<games.length; i++)
+    h3= games[i].id
+    p= games[i].content

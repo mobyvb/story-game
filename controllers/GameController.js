@@ -3,7 +3,25 @@ var Sentence = require('../models/Sentence.js');
 var User = require('../models/User.js');
 
 exports.index = function(req, res) {
+  var compiledGames = [];
+  Game.find({})
+  .limit(10)
+  .exec(function(err, games) {
+    games.forEach(function(game) {
+      Sentence.find({game:game._id})
+      .sort({created_at:'asc'})
+      .exec(function(err, sentences) {
+        var content = '';
+        sentences.forEach(function(sentence) {
+          content += sentence.content + ' ';
+        });
 
+        compiledGames.push({id:game._id, content:content});
+
+        res.render('browsegames', {games:compiledGames});
+      });
+    });
+  });
 };
 
 exports.createGame = function(req, res) {

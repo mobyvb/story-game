@@ -18,7 +18,10 @@ block content
             include game
         -})
       div.group
-        include newgame
+        -if(user.friends.length)
+          include newgame
+        -else
+          h2 Add at least one friend to create a game
     div.span4
       div.group
         h2 Friends
