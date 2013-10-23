@@ -1,5 +1,10 @@
-h2 New game
 form(action='./game/new', method='post')
+  h2 New game
+  -if(errors && errors.newgame)
+    -for(var i=0; i<errors.newgame.length; i++)
+      div.alert.alert-error
+        a.close(data-dismiss='alert') x
+        span= errors.newgame[i]
   div.form-group
     label Select players for this game
     div.checkbox

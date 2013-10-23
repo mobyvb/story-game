@@ -1,5 +1,10 @@
 form.form-signin(action='./signin', method='post')
   h2 Sign in
+  -if(errors && errors.signin)
+    -for(var i=0; i<errors.signin.length; i++)
+      div.alert.alert-error
+        a.close(data-dismiss='alert') x
+        span= errors.signin[i]
   input.form-control.input-block-level(type='text', name='username', placeholder='Username', required)
   input.form-control.input-block-level(type='password', name='password', placeholder='Password', required)
   input.btn.btn-lg.btn-primary(type='submit')

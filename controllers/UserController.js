@@ -5,6 +5,8 @@ var Sentence = require('../models/Sentence.js');
 exports.index = function(req, res) {
   User.findOne({username:req.session.username}, function(err, user) {
     var games = [];
+    var errors = req.session.errors;
+    req.session.errors = {};
     if(req.session.username) {
       if(user.games.length) {
         user.games.forEach(function(gameId, index, array) {
@@ -20,18 +22,18 @@ exports.index = function(req, res) {
                 players:game.players
               });
               if(index+1 === array.length) {
-                res.render('user', {user: user, games:games});
+                res.render('user', {user:user, games:games, errors:errors});
               }
             });
           });
         });
       }
       else {
-        res.render('user', {user:user, games:[]})
+        res.render('user', {user:user, games:[], errors:errors})
       }
     }
     else {
-      res.render('index');
+      res.render('index', {errors:errors});
     }
   });
 };
@@ -60,6 +62,7 @@ exports.signin = function(req, res) {
         res.redirect('/');
       }
       else {
+        req.session.errors = {signin:['incorrect username or password']};
         res.redirect('/');
       }
     });
@@ -86,13 +89,15 @@ exports.addFriend = function(req, res) {
             res.redirect('/');
           }
           else {
-            console.log('already friends');
+            req.session.errors = {friends:['already friends with ' + friendName]};
+            res.redirect('/');
           }
         }
       });
     }
     else {
-      console.log('user doesn\'t exist');
+      req.session.errors = {friends:['there is no user named ' + friendName]};
+      res.redirect('/');
     }
   });
 };
