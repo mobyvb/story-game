@@ -12,6 +12,11 @@ var mongoose = require('mongoose');
 
 var app = express();
 
+var uristring = 
+  process.env.MONGOLAB_URI || 
+  process.env.MONGOHQ_URL || 
+  'mongodb://localhost/story-game';
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -26,16 +31,7 @@ app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-  mongoose.connect('mongodb://localhost/story-game');
-}
-
-//production only
-else if ('production' == app.get('env')) {
-  //mongoose.connect('');
-}
+mongoose.connect(uristring);
 
 app.get('/', users.index);
 app.post('/signup', users.signup);
