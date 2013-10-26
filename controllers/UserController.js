@@ -41,6 +41,9 @@ exports.index = function(req, res) {
 exports.signup = function(req, res) {
   new User({username: req.body.username, password: req.body.password}).save(function(err) {
     if(err) {
+      if(err.code===11000) {
+        req.session.errors = {signup:[req.body.username + ' already exists']};
+      }
       console.log(err);
       res.redirect('/');
     }
@@ -52,20 +55,26 @@ exports.signup = function(req, res) {
 
 exports.signin = function(req, res) {
   User.findOne({username:req.body.username}, function(err, user) {
-    user.comparePassword(req.body.password, function(err, isMatch) {
-      if(err) {
-        console.log(err);
-        res.redirect('/');
-      }
-      else if(isMatch) {
-        req.session.username = user.username;
-        res.redirect('/');
-      }
-      else {
-        req.session.errors = {signin:['incorrect username or password']};
-        res.redirect('/');
-      }
-    });
+    if(user) {
+      user.comparePassword(req.body.password, function(err, isMatch) {
+        if(err) {
+          console.log(err);
+          res.redirect('/');
+        }
+        else if(isMatch) {
+          req.session.username = user.username;
+          res.redirect('/');
+        }
+        else {
+          req.session.errors = {signin:['incorrect username or password']};
+          res.redirect('/');
+        }
+      });
+    }
+    else {
+      req.session.errors = {signin:[req.body.username + ' doesn\'t exist']};
+      res.redirect('/');
+    }
   });
 };
 
