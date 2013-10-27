@@ -32,8 +32,19 @@ block content
       div.group
         h2 Games
         -games.forEach(function(game) {
-          div.group
-            include game
+          -if(game.currentPlayer === user.username && !game.finished)
+            div.group
+              include game
+        -})
+        -games.forEach(function(game) {
+          -if(game.currentPlayer !== user.username && !game.finished)
+            div.group
+              include game
+        -})
+        -games.forEach(function(game) {
+          -if(game.finished)
+            div.group
+              include game
         -})
       div.group
         -if(user.friends.length)
