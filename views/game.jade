@@ -1,12 +1,16 @@
 div.game
-  h3= game.players
-  -if(game.currentPlayer === user.username)
-    p It's your turn. The previous sentence in the story was:
-    p= game.sentence
-    form(action='./game', method='post')
-      input(type='hidden', name='gameId', value=game.id)
-      textarea(name='sentence')
-      br
-      input(type='submit')
+  h3= 'Players: ' + game.players.join(', ')
+  -if(game.finished)
+    p This game is finished.
+    p.text-info= game.content
   -else
-    p It's not your turn.
+    -if(game.currentPlayer === user.username)
+      p It's your turn. The previous sentence in the story was:
+      p.text-info= game.sentence
+      form(action='./game', method='post')
+        input(type='hidden', name='gameId', value=game.id)
+        textarea(name='sentence')
+        br
+        input(type='submit')
+    -else
+      p= 'It is ' + game.currentPlayer + '\'s turn.'

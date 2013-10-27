@@ -15,14 +15,35 @@ exports.index = function(req, res) {
             .sort({created_at:'desc'})
             .limit(1)
             .exec(function(err, sentence) {
-              games.push({
+              var newGame = {
                 id:gameId,
                 sentence:sentence[0].content,
                 currentPlayer:game.players[game.currentPlayer],
-                players:game.players
-              });
-              if(index+1 === array.length) {
-                res.render('user', {user:user, games:games, errors:errors});
+                players:game.players,
+                finished:game.finished
+              }
+              if(game.finished) {
+                Sentence.find({game:game._id})
+                .sort({created_at:'asc'})
+                .exec(function(err, sentences) {
+                  var content = '';
+                  sentences.forEach(function(sentence) {
+                    content += sentence.content + ' ';
+                  });
+
+                  newGame.content = content;
+                  
+                  games.push(newGame);
+                  if(index+1 === array.length) {
+                    res.render('user', {user:user, games:games, errors:errors});
+                  }
+                });
+              }
+              else {
+                games.push(newGame);
+                if(index+1 === array.length) {
+                  res.render('user', {user:user, games:games, errors:errors});
+                }
               }
             });
           });
