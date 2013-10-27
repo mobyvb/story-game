@@ -108,27 +108,33 @@ exports.signout = function(req, res) {
 exports.addFriend = function(req, res) {
   var currUserName = req.session.username;
   var friendName = req.body.username;
-  User.findOne({username:friendName}, function(err, friend) {
-    if(err) console.log(err);
-    else if(friend) {
-      User.findOne({username:currUserName}, function(err, currUser) {
-        if(err) console.log(err);
-        else {
-          if(currUser.friends.indexOf(friendName) === -1) {
-            currUser.friends.push(friendName);
-            currUser.save();
-            res.redirect('/');
-          }
+  if(friendName === currUserName) {
+    req.session.errors = {friends:['you can\'t be friends with yourself']};
+    res.redirect('/');
+  }
+  else {
+    User.findOne({username:friendName}, function(err, friend) {
+      if(err) console.log(err);
+      else if(friend) {
+        User.findOne({username:currUserName}, function(err, currUser) {
+          if(err) console.log(err);
           else {
-            req.session.errors = {friends:['already friends with ' + friendName]};
-            res.redirect('/');
+            if(currUser.friends.indexOf(friendName) === -1) {
+              currUser.friends.push(friendName);
+              currUser.save();
+              res.redirect('/');
+            }
+            else {
+              req.session.errors = {friends:['already friends with ' + friendName]};
+              res.redirect('/');
+            }
           }
-        }
-      });
-    }
-    else {
-      req.session.errors = {friends:['there is no user named ' + friendName]};
-      res.redirect('/');
-    }
-  });
+        });
+      }
+      else {
+        req.session.errors = {friends:['there is no user named ' + friendName]};
+        res.redirect('/');
+      }
+    });
+  }
 };
