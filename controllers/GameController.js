@@ -4,7 +4,7 @@ var User = require('../models/User.js');
 
 exports.index = function(req, res) {
   var compiledGames = [];
-  Game.find({})
+  Game.find({finished:true})
   .limit(10)
   .exec(function(err, games) {
     games.forEach(function(game) {
@@ -17,8 +17,9 @@ exports.index = function(req, res) {
         });
 
         compiledGames.push({id:game._id, content:content});
-
-        res.render('browsegames', {games:compiledGames});
+        if(compiledGames.length === games.length) {
+          res.render('browsegames', {games:compiledGames});
+        }
       });
     });
   });
