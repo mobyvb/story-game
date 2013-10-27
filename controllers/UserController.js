@@ -11,10 +11,12 @@ exports.index = function(req, res) {
       if(user.games.length) {
         for(var i=0; i<user.games.length; i++) {
           Game.findById(user.games[i], function(err, game) {
+            var turnsLeft = game.players.length*game.turnsPer - game.turnsElapsed;
             var gameData = {
               id:game._id,
               currentPlayer:game.players[game.currentPlayer],
               players:game.players,
+              turnsLeft:turnsLeft,
               finished:game.finished
             };
             if(game.finished) {

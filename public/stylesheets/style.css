@@ -47,3 +47,6 @@ label {
 .panel {
   margin-top: 50px;
 }
+.game .text-warning {
+  color: #b94a48;
+}
