@@ -61,7 +61,7 @@ exports.index = function(req, res) {
 };
 
 exports.signup = function(req, res) {
-  new User({username: req.body.username, password: req.body.password}).save(function(err) {
+  new User({username: req.body.username.replace(' ', ''), password: req.body.password}).save(function(err) {
     if(err) {
       if(err.code===11000) {
         req.session.errors = {signup:[req.body.username + ' already exists']};
@@ -76,7 +76,7 @@ exports.signup = function(req, res) {
 };
 
 exports.signin = function(req, res) {
-  User.findOne({username:req.body.username}, function(err, user) {
+  User.findOne({username:req.body.username.replace(' ', '')}, function(err, user) {
     if(user) {
       user.comparePassword(req.body.password, function(err, isMatch) {
         if(err) {
@@ -107,7 +107,7 @@ exports.signout = function(req, res) {
 
 exports.addFriend = function(req, res) {
   var currUserName = req.session.username;
-  var friendName = req.body.username;
+  var friendName = req.body.username.replace(' ', '');
   if(friendName === currUserName) {
     req.session.errors = {friends:['you can\'t be friends with yourself']};
     res.redirect('/');
