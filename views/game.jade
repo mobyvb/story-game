@@ -15,9 +15,8 @@ div.game
         p Start the story off:
       form(action='./game', method='post')
         input(type='hidden', name='gameId', value=game.id)
-        textarea(name='sentence')
-        br
-        input(type='submit')
+        textarea.form-control.input-block-level(name='sentence')
+        input.btn.btn-lg.btn-primary(type='submit')
     -else
       p= 'Turns left: ' + game.turnsLeft
       p= 'It is ' + game.currentPlayer + '\'s turn.'
