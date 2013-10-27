@@ -31,44 +31,54 @@ block content
     div.span6.offset1
       div.group
         h2 Games
-        .panel.panel-default
-          .panel-heading
-            h4.panel-title
-              a.accordion-toggle(data-toggle='collapse', href='#collapseOne')
-                | Your turn
-          #collapseOne.panel-collapse.collapse
-            .panel-body
-              -games.forEach(function(game) {
-                -if(game.currentPlayer === user.username && !game.finished)
-                  div.group
-                    include game
-              -})
+        -var hasFinished = false
+        -var userTurn = false
+        -var notUserTurn = false
+        -games.forEach(function(game) {
+          -if(game.finished) hasFinished = true
+          -else if(game.currentPlayer === user.username) userTurn = true
+          -else notUserTurn = true
+        -})
 
-        .panel.panel-default
-          .panel-heading
-            h4.panel-title
-              a.accordion-toggle(data-toggle='collapse', href='#collapseTwo')
-                | Not your turn
-          #collapseTwo.panel-collapse.collapse
-            .panel-body
-              -games.forEach(function(game) {
-                -if(game.currentPlayer !== user.username && !game.finished)
-                  div.group
-                    include game
-              -})
-
-        .panel.panel-default
-          .panel-heading
-            h4.panel-title
-              a.accordion-toggle(data-toggle='collapse', href='#collapseThree')
-                | Finished
-          #collapseThree.panel-collapse.collapse
-            .panel-body
-              -games.forEach(function(game) {
-                -if(game.finished)
-                  div.group
-                    include game
-              -})
+        -if(userTurn)
+          .panel.panel-default
+            .panel-heading
+              h4.panel-title
+                a.accordion-toggle(data-toggle='collapse', href='#collapseOne')
+                  | Your turn
+            #collapseOne.panel-collapse.collapse
+              .panel-body
+                -games.forEach(function(game) {
+                  -if(game.currentPlayer === user.username && !game.finished)
+                    div.group
+                      include game
+                -})
+        -if(notUserTurn)
+          .panel.panel-default
+            .panel-heading
+              h4.panel-title
+                a.accordion-toggle(data-toggle='collapse', href='#collapseTwo')
+                  | Not your turn
+            #collapseTwo.panel-collapse.collapse
+              .panel-body
+                -games.forEach(function(game) {
+                  -if(game.currentPlayer !== user.username && !game.finished)
+                    div.group
+                      include game
+                -})
+        -if(hasFinished)
+          .panel.panel-default
+            .panel-heading
+              h4.panel-title
+                a.accordion-toggle(data-toggle='collapse', href='#collapseThree')
+                  | Finished
+            #collapseThree.panel-collapse.collapse
+              .panel-body
+                -games.forEach(function(game) {
+                  -if(game.finished)
+                    div.group
+                      include game
+                -})
       div.group
         -if(user.friends.length)
           include newgame
