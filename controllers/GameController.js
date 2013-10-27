@@ -28,27 +28,42 @@ exports.index = function(req, res) {
 exports.createGame = function(req, res) {
   var players = [];
   var friends = req.body.friends;
-  if(typeof friends === 'object') players = friends;
-  else players = [friends];
-  players = shuffle(players);
-  players.unshift(req.session.username);
+  if(friends) {
+    if(typeof friends === 'object') players = friends;
+    else players = [friends];
+    players = shuffle(players);
+    players.unshift(req.session.username);
 
-  new Game({players:players, turnsPer:req.body.turnsPer}).save(function(err, game) {
-    if(err) {
-      console.log(err);
+    if(typeof req.body.turnsPer === 'Number' && req.body.turnsPer >= 1) {
+      new Game({players:players, turnsPer:req.body.turnsPer}).save(function(err, game) {
+        if(err) {
+          res.redirect('/');
+        }
+        else {
+          players.forEach(function(player) {
+            User.findOne({username:player}, function(err, user) {
+              user.games.push(game._id);
+              user.save();
+            });
+          });
+
+          res.redirect('/');
+        }
+      });
+    }
+    else if(typeof req.body.turnsPer !== 'Number') {
+      req.session.errors = {newgame:['please enter a number']};
       res.redirect('/');
     }
     else {
-      players.forEach(function(player) {
-        User.findOne({username:player}, function(err, user) {
-          user.games.push(game._id);
-          user.save();
-        });
-      });
-
+      req.session.errors = {newgame:['turns per player must be one or greater']};
       res.redirect('/');
     }
-  });
+  }
+  else {
+    req.session.errors = {newgame:['you must add at least one other player']};
+    res.redirect('/');
+  }
 };
 
 exports.addSentence = function(req,res) {
