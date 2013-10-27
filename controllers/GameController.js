@@ -30,8 +30,8 @@ exports.createGame = function(req, res) {
   var friends = req.body.friends;
   if(typeof friends === 'object') players = friends;
   else players = [friends];
-  players.push(req.session.username);
   players = shuffle(players);
+  players.unshift(req.session.username);
 
   new Game({players:players, turnsPer:req.body.turnsPer}).save(function(err, game) {
     if(err) {
