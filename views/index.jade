@@ -4,15 +4,21 @@ block content
   div.container
     div.hero-unit
       h1 Story game
-      br
-      p This is a text based game-experiment-thing.
-      p Rules:
-        ul
-          li A game starts with two or more players (preferably three or more)
-          li The first player starts a story off
-          li Subsequent turns involve reading the previous text and continuing the story based on it
-          li Each player can only read the text submitted by the player before them, which makes for especially entertaining stories
-          li The game ends when each player has gone a certain number of turns, at which point the story can be read in its entirety
+      .panel.panel-default
+          .panel-heading
+            h4.panel-title
+              a.accordion-toggle(data-toggle='collapse', href='#collapseTwo')
+                | Click to toggle information
+          #collapseTwo.panel-collapse.collapse
+            .panel-body
+              p This is a text based game-experiment-thing.
+              p Rules:
+                ul
+                  li A game starts with two or more players (preferably three or more)
+                  li The first player starts a story off
+                  li Subsequent turns involve reading the previous text and continuing the story based on it
+                  li Each player can only read the text submitted by the player before them, which makes for especially entertaining stories
+                  li The game ends when each player has gone a certain number of turns, at which point the story can be read in its entirety
 
   div.main-content
     div.row-fluid
