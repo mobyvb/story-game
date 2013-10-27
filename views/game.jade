@@ -5,8 +5,11 @@ div.game
     p.text-info= game.content
   -else
     -if(game.currentPlayer === user.username)
-      p It's your turn. The previous sentence in the story was:
-      p.text-info= game.sentence
+      -if(game.sentence)
+        p It's your turn. The previous sentence in the story was:
+        p.text-info= game.sentence
+      -else
+        p Start the story off:
       form(action='./game', method='post')
         input(type='hidden', name='gameId', value=game.id)
         textarea(name='sentence')

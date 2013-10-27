@@ -9,45 +9,44 @@ exports.index = function(req, res) {
     req.session.errors = {};
     if(req.session.username) {
       if(user.games.length) {
-        user.games.forEach(function(gameId, index, array) {
-          Game.findById(gameId, function(err, game) {
-            Sentence.find({game:gameId})
-            .sort({created_at:'desc'})
-            .limit(1)
-            .exec(function(err, sentence) {
-              var newGame = {
-                id:gameId,
-                sentence:sentence[0].content,
-                currentPlayer:game.players[game.currentPlayer],
-                players:game.players,
-                finished:game.finished
-              }
-              if(game.finished) {
-                Sentence.find({game:game._id})
-                .sort({created_at:'asc'})
-                .exec(function(err, sentences) {
-                  var content = '';
-                  sentences.forEach(function(sentence) {
-                    content += sentence.content + ' ';
-                  });
-
-                  newGame.content = content;
-                  
-                  games.push(newGame);
-                  if(index+1 === array.length) {
-                    res.render('user', {user:user, games:games, errors:errors});
-                  }
+        for(var i=0; i<user.games.length; i++) {
+          Game.findById(user.games[i], function(err, game) {
+            var gameData = {
+              id:game._id,
+              currentPlayer:game.players[game.currentPlayer],
+              players:game.players,
+              finished:game.finished
+            };
+            if(game.finished) {
+              Sentence.find({game:game._id})
+              .sort({created_at:'asc'})
+              .exec(function(err, sentences) {
+                var content = '';
+                sentences.forEach(function(sentence) {
+                  content += sentence.content + ' ';
                 });
-              }
-              else {
-                games.push(newGame);
-                if(index+1 === array.length) {
+
+                gameData.content = content;
+                games.push(gameData);
+                if(games.length === user.games.length) {
                   res.render('user', {user:user, games:games, errors:errors});
                 }
-              }
-            });
+              });
+            }
+            else {
+              Sentence.find({game:game._id})
+              .sort({created_at:'desc'})
+              .limit(1)
+              .exec(function(err, sentence) {
+                gameData.sentence = sentence[0] ? sentence[0].content : null;
+                games.push(gameData);
+                if(games.length === user.games.length) {
+                  res.render('user', {user:user, games:games, errors:errors});
+                }
+              });
+            }
           });
-        });
+        }
       }
       else {
         res.render('user', {user:user, games:[], errors:errors})
