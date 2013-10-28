@@ -119,8 +119,17 @@ exports.addFriend = function(req, res) {
         User.findOne({username:currUserName}, function(err, currUser) {
           if(err) console.log(err);
           else {
-            if(currUser.friends.indexOf(friendName) === -1) {
+            if(currUser.friends.indexOf(friendName)===-1 && currUser.pendingFriends.indexOf(friendName)===-1) {
               currUser.friends.push(friendName);
+              currUser.save();
+              friend.pendingFriends.push(currUserName);
+              friend.save();
+              res.redirect('/');
+            }
+            else if(currUser.pendingFriends.indexOf(friendName) !== -1) {
+              var index = currUser.pendingFriends.indexOf(friendName);
+              currUser.friends.push(friendName);
+              currUser.pendingFriends.splice(index, 1);
               currUser.save();
               res.redirect('/');
             }

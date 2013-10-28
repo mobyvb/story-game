@@ -91,5 +91,14 @@ block content
           -user.friends.forEach(function(friend) {
             li= friend
           -})
+        if(user.pendingFriends.length)
+          h2 Friend requests
+          ul
+            -user.pendingFriends.forEach(function(pendingFriend) {
+              form(action='./addfriend', method='post')
+                input(type='hidden', name='username', value=pendingFriend)
+                li= pendingFriend + ' '
+                  input.btn.btn-small.btn-default(type='submit', value='add friend')
+            -})
       div.group
         include addfriend
