@@ -33,9 +33,9 @@ exports.createGame = function(req, res) {
     else players = [friends];
     players = shuffle(players);
     players.unshift(req.session.username);
-
-    if(typeof req.body.turnsPer === 'Number' && req.body.turnsPer >= 1) {
-      new Game({players:players, turnsPer:req.body.turnsPer}).save(function(err, game) {
+    var turnsPer = ~~req.body.turnsPer;
+    if(turnsPer >= 1) {
+      new Game({players:players, turnsPer:turnsPer}).save(function(err, game) {
         if(err) {
           res.redirect('/');
         }
@@ -51,12 +51,8 @@ exports.createGame = function(req, res) {
         }
       });
     }
-    else if(typeof req.body.turnsPer !== 'Number') {
-      req.session.errors = {newgame:['please enter a number']};
-      res.redirect('/');
-    }
     else {
-      req.session.errors = {newgame:['turns per player must be one or greater']};
+      req.session.errors = {newgame:['turns per player must be a number that is one or greater']};
       res.redirect('/');
     }
   }
