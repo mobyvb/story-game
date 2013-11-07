@@ -7,7 +7,7 @@ var smtpTransport = nodemailer.createTransport('SMTP',{
   service: 'Gmail',
   auth: {
     user: 'mvb.story.game@gmail.com',
-    pass: ''
+    pass: process.env.ADMIN_GMAIL_PASS
   }
 });
 
