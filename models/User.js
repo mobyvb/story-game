@@ -8,7 +8,10 @@ var UserSchema = new Schema({
   password: { type: String, required: true },
   friends: [],
   pendingFriends: [],
-  games: []
+  games: [],
+  email: { type: String },
+  pendingEmail: { type: String },
+  emailVerify: { type: String, index: true}
 });
 
 UserSchema.pre('save', function(next) {

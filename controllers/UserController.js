@@ -1,6 +1,15 @@
+var nodemailer = require('nodemailer');
 var User = require('../models/User.js');
 var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
+
+var smtpTransport = nodemailer.createTransport('SMTP',{
+  service: 'Gmail',
+  auth: {
+    user: 'mvb.story.game@gmail.com',
+    pass: ''
+  }
+});
 
 exports.index = function(req, res) {
   User.findOne({username:req.session.username}, function(err, user) {
@@ -147,3 +156,64 @@ exports.addFriend = function(req, res) {
     });
   }
 };
+
+exports.addEmail = function(req, res) {
+  if(req.body.email) {
+    if(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(req.body.email)) {
+      var emailVerify;
+      require('crypto').randomBytes(20, function(ex, buf) {
+        emailVerify = buf.toString('hex');
+      });
+
+      User.findOne({username:req.session.username}, function(err, user) {
+        if(user) {
+          user.pendingEmail = req.body.email;
+          user.emailVerify = emailVerify;
+          user.save();
+
+          var mailOptions = {
+            from: 'Story Game <mvb.story.game@gmail.com>', // sender address
+            to: req.body.email, // list of receivers
+            subject: 'Verification', // Subject line
+            text: 'Hey, ' + user.username + '! Please verify your email by clicking this link: http://mvb-story-game.herokuapp.com/verify/'+emailVerify
+          };
+
+          smtpTransport.sendMail(mailOptions, function(error, response) {
+            if(error) {
+              console.log(error);
+            }
+            else {
+              console.log('message sent: ' + response.message);
+            }
+          });
+
+          res.redirect('/');
+        }
+        else {
+          res.redirect('/');
+        }
+      });
+    }
+    else {
+      req.session.errors = {email:['please enter a valid email']};
+      res.redirect('/');
+    }
+  }
+  else if(req.params.code) {
+    User.findOne({emailVerify:req.params.code}, function(err, user) {
+      if(err) {
+        console.log(err);
+      }
+      else if(!user) {
+        res.redirect('/');
+      }
+      else {
+        user.email = user.pendingEmail;
+        user.emailVerify = '';
+        user.pendingEmail = '';
+        user.save();
+        res.redirect('/');
+      }
+    });
+  }
+}

@@ -38,6 +38,8 @@ app.post('/signup', users.signup);
 app.post('/signin', users.signin);
 app.get('/signout', users.signout);
 app.post('/addfriend', users.addFriend);
+app.get('/verify/:code', users.addEmail);
+app.post('/addemail', users.addEmail);
 app.get('/browse', games.index);
 app.post('/game/new', games.createGame);
 app.post('/game', games.addSentence);
