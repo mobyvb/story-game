@@ -1,6 +1,15 @@
+var nodemailer = require('nodemailer');
 var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
 var User = require('../models/User.js');
+
+var smtpTransport = nodemailer.createTransport('SMTP',{
+  service: 'Gmail',
+  auth: {
+    user: 'mvb.story.game@gmail.com',
+    pass: ''
+  }
+});
 
 exports.index = function(req, res) {
   var compiledGames = [];
@@ -82,6 +91,28 @@ exports.addSentence = function(req,res) {
             if(game.currentPlayer>=game.players.length) game.currentPlayer = 0;
             game.turnsElapsed++;
             game.save();
+
+            var nextPlayerName = game.players[game.currentPlayer];
+            User.findOne({username:nextPlayerName}, function(err, user) {
+              if(user.email) {
+                var mailOptions = {
+                  from: 'Story Game <mvb.story.game@gmail.com>', // sender address
+                  to: user.email, // list of receivers
+                  subject: 'It\'s your turn!', // Subject line
+                  text: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn. Go to http://mvb-story-game.herokuapp.com to continue the story.'
+                };
+
+                smtpTransport.sendMail(mailOptions, function(error, response) {
+                  if(error) {
+                    console.log(error);
+                  }
+                  else {
+                    console.log('message sent: ' + response.message);
+                  }
+                });
+              }
+            });
+
             res.redirect('/');
           }
         });
