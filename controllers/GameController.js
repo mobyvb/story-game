@@ -2,7 +2,7 @@ var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
 var User = require('../models/User.js');
 
-var smsClient = require('twilio')('', '');
+var smsClient = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 var smtpTransport = require('nodemailer').createTransport('SMTP',{
   service: 'Gmail',
   auth: {
@@ -109,6 +109,13 @@ exports.addSentence = function(req,res) {
                   else {
                     console.log('message sent: ' + response.message);
                   }
+                });
+              }
+              if(user.phone) {
+                smsClient.sendMessage({
+                  to:'+'+user.phone,
+                  from: '+18036102184',
+                  body: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn.'
                 });
               }
             });

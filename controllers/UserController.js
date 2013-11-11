@@ -1,9 +1,9 @@
-var nodemailer = require('nodemailer');
 var User = require('../models/User.js');
 var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
 
-var smtpTransport = nodemailer.createTransport('SMTP',{
+var smsClient = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+var smtpTransport = require('nodemailer').createTransport('SMTP',{
   service: 'Gmail',
   auth: {
     user: 'mvb.story.game@gmail.com',
@@ -228,6 +228,12 @@ exports.addPhone = function(req, res) {
           if(number.length === 10) number = '1' + number;
           user.phone = number;
           user.save();
+
+          smsClient.sendMessage({
+            to:'+'+user.phone,
+            from: '+18036102184',
+            body: 'You are receiving notifications for the story game.'
+          });
 
           res.redirect('/');
         }
