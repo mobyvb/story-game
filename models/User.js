@@ -11,7 +11,8 @@ var UserSchema = new Schema({
   games: [],
   email: { type: String },
   pendingEmail: { type: String },
-  emailVerify: { type: String, index: true}
+  emailVerify: { type: String, index: true},
+  phone: { type: Number }
 });
 
 UserSchema.pre('save', function(next) {

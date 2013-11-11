@@ -217,3 +217,32 @@ exports.addEmail = function(req, res) {
     });
   }
 }
+
+exports.addPhone = function(req, res) {
+  if(req.body.phone) {
+    var number = req.body.phone.replace(/\W/g, '');
+
+    if(!/[a-zA-Z]/.test(number) && (number.length === 10 || (number.length===11 && number[0]==='1'))) {
+      User.findOne({username:req.session.username}, function(err, user) {
+        if(user) {
+          if(number.length === 10) number = '1' + number;
+          user.phone = number;
+          user.save();
+
+          res.redirect('/');
+        }
+        else {
+          res.redirect('/');
+        }
+      });
+    }
+    else {
+      req.session.errors = {phone:['please enter a valid US phone number']};
+      res.redirect('/');
+    }
+  }
+  else {
+    req.session.errors = {phone:['please enter a valid phone number']};
+    res.redirect('/');
+  }
+}

@@ -1,0 +1,16 @@
+-if(user.phone)
+  -var phone = '' + user.phone;
+  -var readablePhone = '+1 ('+phone.slice(1,4)+') '+phone.slice(4,7)+'-'+phone.slice(7,11);
+  p You are currently receiving text notifications at #{readablePhone}.
+  h3 Change phone number:
+
+-else
+  h3 Add number for text notifications:
+form(action='./addphone', method='post')
+  -if(errors && errors.phone)
+    -for(var i=0; i<errors.phone.length; i++)
+      div.alert.alert-error
+        a.close(data-dismiss='alert') x
+        span= errors.phone[i]
+  input.form-control.input-block-level(type='tel', name='phone', placeholder='Phone number', required)
+  input.btn.btn-lg.btn-primary(type='submit')

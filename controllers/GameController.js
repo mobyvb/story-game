@@ -1,9 +1,9 @@
-var nodemailer = require('nodemailer');
 var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
 var User = require('../models/User.js');
 
-var smtpTransport = nodemailer.createTransport('SMTP',{
+var smsClient = require('twilio')('', '');
+var smtpTransport = require('nodemailer').createTransport('SMTP',{
   service: 'Gmail',
   auth: {
     user: 'mvb.story.game@gmail.com',
