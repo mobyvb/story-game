@@ -71,7 +71,7 @@ exports.signin = function(req, res) {
         }
         else if(isMatch) {
           req.session.username = user.username;
-          res.redirect('/profile');
+          res.redirect('/games');
         }
         else {
           req.session.errors = {signin:['incorrect username or password']};
@@ -88,7 +88,7 @@ exports.signin = function(req, res) {
 
 exports.signout = function(req, res) {
   req.session.username = undefined;
-  res.redirect('/profile');
+  res.redirect('/');
 };
 
 exports.addFriend = function(req, res) {
