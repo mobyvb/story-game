@@ -1,4 +1,4 @@
-form.form-signin(action='./signin', method='post')
+form(action='./signin', method='post')
   h2 sign in
   -if(errors && errors.signin)
     -for(var i=0; i<errors.signin.length; i++)

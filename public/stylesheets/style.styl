@@ -109,6 +109,8 @@ form
   margin 0 25px
   display inline-block
   vertical-align top
+  &.inline-form
+    width 50px
 input
   float right
   width 150px
@@ -117,8 +119,14 @@ input
   font 16px 'AmericanTypewriter', Cambria, Georgia
   &[type='submit']
     width 156px
+  &.inline-btn
+    width 50px
 ul
   margin 0
+ul.friends
+  column-count 3
+  -moz-column-count 3
+  -webkit-column-count 3
 .group
   transition: height 0.5s
   -webkit-transition: height 0.5s
@@ -168,3 +176,6 @@ ul
   color #b94a48
 .success
   color #468847
+
+h3.page-subheader
+  margin 0 25px

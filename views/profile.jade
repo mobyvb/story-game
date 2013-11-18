@@ -2,7 +2,23 @@ extends layout
 block content
   div.page
     div.page-header
-      h1 story game
+      h1 profile
     div.page-body
-      h2 Notifications
+      h2 notifications
       include notifications
+
+      h2 friends
+      ul.friends
+        -user.friends.forEach(function(friend) {
+          li= friend
+        -})
+      if(user.pendingFriends.length)
+        h3.page-subheader friend requests
+        ul.friends
+          -user.pendingFriends.forEach(function(pendingFriend) {
+            li= pendingFriend
+              form.inline-form(action='./addfriend', method='post')
+                input(type='hidden', name='username', value=pendingFriend)
+                input.inline-btn(type='submit', value='add')
+          -})
+      include addfriend

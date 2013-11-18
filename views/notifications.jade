@@ -1,33 +1,34 @@
 -if(user.email)
-  p You are currently receiving notifications at #{user.email}.
--if(user.pendingEmail)
-  p An email has been sent to #{user.pendingEmail} for you to verify.
--if(user.pendingEmail || user.email)
-  h3 Change email:
--else
-  h3 Add email:
-form(action='./addemail', method='post')
-  -if(errors && errors.email)
-    -for(var i=0; i<errors.email.length; i++)
-      div.alert.alert-error
-        a.close(data-dismiss='alert') x
-        span= errors.email[i]
-  input.form-control.input-block-level(type='email', name='email', placeholder='Email', required)
-  input.btn.btn-lg.btn-primary(type='submit')
-
+  p.success You are currently receiving email notifications at #{user.email}.
 -if(user.phone)
   -var phone = '' + user.phone;
   -var readablePhone = '+1 ('+phone.slice(1,4)+') '+phone.slice(4,7)+'-'+phone.slice(7,11);
-  p You are currently receiving text notifications at #{readablePhone}.
-  h3 Change phone number:
+  p.success You are currently receiving text notifications at #{readablePhone}.
+-if(user.pendingEmail)
+  p.success An email has been sent to #{user.pendingEmail} for you to verify.
 
--else
-  h3 Add number for text notifications:
+form(action='./addemail', method='post')
+  -if(user.pendingEmail || user.email)
+    h3 change email:
+  -else
+    h3 add email:
+  -if(errors && errors.email)
+    -for(var i=0; i<errors.email.length; i++)
+      div.error= errors.email[i]
+  div.group
+    label email:
+    input(type='email', name='email', required)
+  input(type='submit')
+
 form(action='./addphone', method='post')
+  -if(user.phone)
+    h3 change phone number:
+  -else
+    h3 add phone number:
   -if(errors && errors.phone)
     -for(var i=0; i<errors.phone.length; i++)
-      div.alert.alert-error
-        a.close(data-dismiss='alert') x
-        span= errors.phone[i]
-  input.form-control.input-block-level(type='tel', name='phone', placeholder='Phone number', required)
-  input.btn.btn-lg.btn-primary(type='submit')
+      div.error= errors.phone[i]
+  div.group
+    label phone #:
+    input(type='tel', name='phone', required)
+  input(type='submit')

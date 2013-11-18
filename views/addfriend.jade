@@ -1,9 +1,9 @@
 form(action='./addfriend', method='post')
-  h2 Add friend
+  h3 add friend:
   -if(errors && errors.friends)
     -for(var i=0; i<errors.friends.length; i++)
-      div.alert.alert-error
-        a.close(data-dismiss='alert') x
-        span= errors.friends[i]
-  input.form-control.input-block-level(type='text', name='username', placeholder='Username', required)
-  input.btn.btn-lg.btn-primary(type='submit')
+      div.error= errors.friends[i]
+  div.group
+    label username:
+    input(type='text', name='username', required)
+  input(type='submit')

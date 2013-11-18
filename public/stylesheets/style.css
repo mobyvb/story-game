@@ -129,6 +129,9 @@ form {
   display: inline-block;
   vertical-align: top;
 }
+form.inline-form {
+  width: 50px;
+}
 input {
   float: right;
   width: 150px;
@@ -139,8 +142,16 @@ input {
 input[type='submit'] {
   width: 156px;
 }
+input.inline-btn {
+  width: 50px;
+}
 ul {
   margin: 0;
+}
+ul.friends {
+  column-count: 3;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
 }
 .group {
   transition: height 0.5s;
@@ -204,4 +215,7 @@ ul {
 }
 .success {
   color: #468847;
+}
+h3.page-subheader {
+  margin: 0 25px;
 }
