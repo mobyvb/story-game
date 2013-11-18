@@ -1,6 +1,7 @@
 $('.category').click(function(e) {
   var card = $(this);
-  if(card.css('left') !== 'auto') {
+  console.log('card clicked');
+  if(card.css('left') !== 'auto' && card.css('left') !== '0px') {
     uncollapseCards(this);
   }
   else {
@@ -10,12 +11,11 @@ $('.category').click(function(e) {
 
 function uncollapseCards(category) {
   var card = $(category);
-  card.css('left', 'auto');
-  card.siblings().children('.notecard').css('left', 'auto').css('top', 'auto');
+  card.css('left', '0');
+  card.siblings().children('.notecard').css('left', '0').css('top', '0');
   var numCards = card.siblings().children('.notecard').length+1;
   var rows = Math.ceil(numCards/(~~($('body').width()/353)));
   var height = rows*200;
-  console.log(height);
   card.parent().css('height', height+'px');
 }
 function collapseCards(category) {
