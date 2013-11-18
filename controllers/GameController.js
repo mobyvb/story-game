@@ -144,6 +144,32 @@ exports.createGame = function(req, res) {
         else {
           players.forEach(function(player) {
             User.findOne({username:player}, function(err, user) {
+              if(user.username !== req.session.username) {
+                if(user.email) {
+                  var mailOptions = {
+                    from: 'Story Game <mvb.story.game@gmail.com>', // sender address
+                    to: user.email, // list of receivers
+                    subject: 'You\'ve been added to a game!', // Subject line
+                    text: 'Hey, ' + user.username + '! You have just been added to a new game by ' + req.session.username + '.'
+                  };
+
+                  smtpTransport.sendMail(mailOptions, function(error, response) {
+                    if(error) {
+                      console.log(error);
+                    }
+                    else {
+                      console.log('message sent: ' + response.message);
+                    }
+                  });
+                }
+                if(user.phone) {
+                  smsClient.sendMessage({
+                    to:'+'+user.phone,
+                    from: '+18036102184',
+                    body: 'Hey, ' + user.username + '! You have just been added to a new game by ' + req.session.username + '.'
+                  });
+                }
+              }
               user.games.push(game._id);
               user.save();
             });
@@ -192,7 +218,7 @@ exports.addSentence = function(req,res) {
                   from: 'Story Game <mvb.story.game@gmail.com>', // sender address
                   to: user.email, // list of receivers
                   subject: 'It\'s your turn!', // Subject line
-                  text: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn. Go to http://mvb-story-game.herokuapp.com to continue the story.'
+                  text: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn.'
                 };
 
                 smtpTransport.sendMail(mailOptions, function(error, response) {
