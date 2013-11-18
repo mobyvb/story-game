@@ -2,13 +2,17 @@ form.form-signin(action='./signup', method='post')
   h2 create account
   -if(errors && errors.signup)
     -for(var i=0; i<errors.signup.length; i++)
-      div.alert.alert-error
-        a.close(data-dismiss='alert') x
-        span= errors.signup[i]
+      div.error= errors.signup[i]
+  -if(success && success.signup)
+    -for(var i=0; i<success.signup.length; i++)
+      div.success= success.signup[i]
   div.group
     label username:
-    input.form-control.input-block-level(type='text', name='username', required)
+    input(type='text', name='username', required)
   div.group
     label password:
-    input.form-control.input-block-level(type='password', name='password', required)
-  input.btn.btn-lg.btn-primary(type='submit', value='submit')
+    input(type='password', name='password', required)
+  div.group
+    label confirm:
+    input(type='password', name='confirmPassword', required)
+  input(type='submit', value='submit')

@@ -2,13 +2,11 @@ form.form-signin(action='./signin', method='post')
   h2 sign in
   -if(errors && errors.signin)
     -for(var i=0; i<errors.signin.length; i++)
-      div.alert.alert-error
-        a.close(data-dismiss='alert') x
-        span= errors.signin[i]
+      div.error= errors.signin[i]
   div.group
     label username:
-    input.form-control.input-block-level(type='text', name='username', required)
+    input(type='text', name='username', required)
   div.group
     label password:
-    input.form-control.input-block-level(type='password', name='password', required)
-  input.btn.btn-lg.btn-primary(type='submit', value='submit')
+    input(type='password', name='password', required)
+  input(type='submit', value='submit')

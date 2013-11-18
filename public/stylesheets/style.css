@@ -127,6 +127,7 @@ form {
   width: 250px;
   margin: 0 25px;
   display: inline-block;
+  vertical-align: top;
 }
 input {
   float: right;
@@ -197,4 +198,10 @@ ul {
 }
 .heading .user a {
   color: #87ceeb;
+}
+.error {
+  color: #b94a48;
+}
+.success {
+  color: #468847;
 }

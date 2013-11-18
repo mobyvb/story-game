@@ -14,12 +14,14 @@ var smtpTransport = require('nodemailer').createTransport('SMTP',{
 exports.index = function(req, res) {
   User.findOne({username:req.session.username}, function(err, user) {
     var errors = req.session.errors;
+    var success = req.session.success;
     req.session.errors = {};
+    req.session.success = {};
     if(req.session.username) {
       res.redirect('/profile');
     }
     else {
-      res.render('index', {errors:errors});
+      res.render('index', {errors:errors, success:success});
     }
   });
 };
@@ -38,18 +40,25 @@ exports.profile = function(req, res) {
 }
 
 exports.signup = function(req, res) {
-  new User({username: req.body.username.replace(' ', ''), password: req.body.password}).save(function(err) {
-    if(err) {
-      if(err.code===11000) {
-        req.session.errors = {signup:[req.body.username + ' already exists']};
+  if(req.body.password !== req.body.confirmPassword) {
+    req.session.errors = {signup:['your passwords do not match']};
+    res.redirect('/');
+  }
+  else {
+    new User({username: req.body.username.replace(' ', ''), password: req.body.password}).save(function(err) {
+      if(err) {
+        if(err.code===11000) {
+          req.session.errors = {signup:[req.body.username + ' already exists']};
+        }
+        console.log(err);
+        res.redirect('/');
       }
-      console.log(err);
-      res.redirect('/');
-    }
-    else {
-      res.redirect('/');
-    }
-  });
+      else {
+        req.session.success = {signup:['account successfully created']};
+        res.redirect('/');
+      }
+    });
+  }
 };
 
 exports.signin = function(req, res) {
