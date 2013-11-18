@@ -3,6 +3,8 @@ html
   head
     title story game
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/libs/fastclick.min.js')
+    script(src='/scripts/scripts.js')
   body
     -if(user)
       div.heading
@@ -13,6 +15,8 @@ html
             h2 games
           a(href='/profile').nav-link
             h2 profile
+          a(href='/newgame').nav-link
+            h2 new game
         div.user
           h3= 'logged in as ' + user.username
           a(href='/signout')
