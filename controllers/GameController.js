@@ -71,6 +71,7 @@ exports.index = function(req, res) {
 
 exports.showGame = function(req, res) {
   var errors = req.session.errors;
+  req.session.errors = {};
   Game.findById(req.params.id, function(err, game) {
     var turnsLeft = game.players.length*game.turnsPer - game.turnsElapsed;
     var gameData = {
@@ -108,6 +109,19 @@ exports.showGame = function(req, res) {
   });
 }
 
+exports.createGameForm = function(req, res) {
+  var errors = req.session.errors;
+  req.session.errors = {};
+  User.findOne({username:req.session.username}, function(err, user) {
+    if(err || !user) {
+      res.redirect('/');
+    }
+    else {
+      res.render('newgame', {errors:errors, user:user})
+    }
+  });
+};
+
 exports.createGame = function(req, res) {
   var players = [];
   var friends = req.body.friends;
@@ -136,12 +150,12 @@ exports.createGame = function(req, res) {
     }
     else {
       req.session.errors = {newgame:['turns per player must be a number that is one or greater']};
-      res.redirect('/games');
+      res.redirect('/newgame');
     }
   }
   else {
     req.session.errors = {newgame:['you must add at least one other player']};
-    res.redirect('/games');
+    res.redirect('/newgame');
   }
 };
 

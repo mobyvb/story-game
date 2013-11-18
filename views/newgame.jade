@@ -1,20 +1,27 @@
-form(action='./game/new', method='post')
-  h2 New game
-  -if(errors && errors.newgame)
-    -for(var i=0; i<errors.newgame.length; i++)
-      div.alert.alert-error
-        a.close(data-dismiss='alert') x
-        span= errors.newgame[i]
-  div.form-group
-    label Select players for this game
-    div.checkbox
-      -user.friends.forEach(function(friend) {
-        label
-          input(type='checkbox', name='friends', value=friend)
-          =friend
-      -})
-  div.form-group
-    label Number of turns per player
-    input.form-control(type='number', name='turnsPer', min='1', id='turnsPer', required)
+extends layout
+block content
+  div.page
+    div.page-header
+      h1 new game
+    div.page-body
+      -if(user.friends.length)
+        form.creategame(action='/newgame', method='post')
+          -if(errors && errors.newgame)
+            -for(var i=0; i<errors.newgame.length; i++)
+              div.error= errors.newgame[i]
+          label Select players for this game
+          ul.friends
+            -user.friends.forEach(function(friend) {
+              li
+                label= friend
+                  input(type='checkbox', name='friends', value=friend)
+                  
+            -})
+          div.group
+            label number of turns per player:
+            input(type='number', name='turnsPer', min='1', id='turnsPer', required)
 
-  input.btn.btn-lg.btn-primary(type='submit')
+          input(type='submit')
+
+      -else
+        h2 add at least one friend to create a game

@@ -123,6 +123,8 @@ form
       padding none
       overflow auto
       resize none
+  &.creategame
+    width 100%
 input
   float right
   width 150px
@@ -131,11 +133,15 @@ input
   font 16px 'AmericanTypewriter', Cambria, Georgia
   &[type='submit']
     width 156px
+  &[type='checkbox']
+    width auto
+    float left
   &.inline-btn
     width 50px
 ul
   margin 0
 ul.friends
+  list-style none
   column-count 3
   -moz-column-count 3
   -webkit-column-count 3
@@ -172,7 +178,6 @@ ul.friends
     float left
   & .nav-container
     padding-top 5px
-    width 250px
     text-align center
     & *
       margin 0 10px

@@ -146,6 +146,9 @@ form.game textarea {
   overflow: auto;
   resize: none;
 }
+form.creategame {
+  width: 100%;
+}
 input {
   float: right;
   width: 150px;
@@ -156,6 +159,10 @@ input {
 input[type='submit'] {
   width: 156px;
 }
+input[type='checkbox'] {
+  width: auto;
+  float: left;
+}
 input.inline-btn {
   width: 50px;
 }
@@ -163,6 +170,7 @@ ul {
   margin: 0;
 }
 ul.friends {
+  list-style: none;
   column-count: 3;
   -moz-column-count: 3;
   -webkit-column-count: 3;
@@ -208,7 +216,6 @@ ul.friends {
 }
 .heading .nav-container {
   padding-top: 5px;
-  width: 250px;
   text-align: center;
 }
 .heading .nav-container * {

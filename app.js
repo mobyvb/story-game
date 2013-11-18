@@ -43,8 +43,9 @@ app.get('/verify/:code', users.addEmail);
 app.post('/addemail', users.addEmail);
 app.post('/addphone', users.addPhone);
 app.get('/games', games.index);
-app.get('/game/:id', games.showGame)
-app.post('/game/new', games.createGame);
+app.get('/game/:id', games.showGame);
+app.get('/newgame', games.createGameForm);
+app.post('/newgame', games.createGame);
 app.post('/game', games.addSentence);
 
 http.createServer(app).listen(app.get('port'), function(){
