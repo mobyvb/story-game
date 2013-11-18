@@ -1,22 +1,24 @@
-div.game
-  h3= 'Players: ' + game.players.join(', ')
-  -if(game.finished)
-    p This game is finished.
-    p.text-info= game.content
-  -else
-    -if(game.currentPlayer === user.username)
-      p= 'Turns left: ' + game.turnsLeft
-      -if(game.sentence)
-        p It's your turn. The previous sentence in the story was:
-        p.text-info= game.sentence
-        -if(game.turnsLeft === 1)
-          p.text-warning This is the last turn. Wrap the story up.
-      -else
-        p Start the story off:
-      form(action='./game', method='post')
-        input(type='hidden', name='gameId', value=game.id)
-        textarea.form-control.input-block-level(name='sentence')
-        input.btn.btn-lg.btn-primary(type='submit')
+a(href='/game/'+game.id)
+  div.notecard
+    h4= game.players.join(', ')
+    -if(game.finished)
+      p This game is finished. Click to view the story.
+      //- p.text-info= game.content
     -else
-      p= 'Turns left: ' + game.turnsLeft
-      p= 'It is ' + game.currentPlayer + '\'s turn.'
+      -if(game.currentPlayer === user.username)
+        p= 'Turns left: ' + game.turnsLeft
+        p It's your turn. Click to play.
+        //- -if(game.sentence)
+        //-   p It's your turn. The previous sentence in the story was:
+        //-   p.text-info= game.sentence
+        //-   -if(game.turnsLeft === 1)
+        //-     p.text-warning This is the last turn. Wrap the story up.
+        //- -else
+        //-   p Start the story off:
+        //- form(action='./game', method='post')
+        //-   input(type='hidden', name='gameId', value=game.id)
+        //-   textarea.form-control.input-block-level(name='sentence')
+        //-   input.btn.btn-lg.btn-primary(type='submit')
+      -else
+        p= 'Turns left: ' + game.turnsLeft
+        p= 'It is ' + game.currentPlayer + '\'s turn.'

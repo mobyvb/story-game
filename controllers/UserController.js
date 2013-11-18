@@ -2,7 +2,7 @@ var User = require('../models/User.js');
 var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
 
-var smsClient = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+var smsClient = require('twilio');
 var smtpTransport = require('nodemailer').createTransport('SMTP',{
   service: 'Gmail',
   auth: {
@@ -40,7 +40,7 @@ exports.index = function(req, res) {
                 gameData.content = content;
                 games.push(gameData);
                 if(games.length === user.games.length) {
-                  res.render('user', {user:user, games:games, errors:errors});
+                  res.render('profile', {user:user, games:games, errors:errors});
                 }
               });
             }
@@ -52,7 +52,7 @@ exports.index = function(req, res) {
                 gameData.sentence = sentence[0] ? sentence[0].content : null;
                 games.push(gameData);
                 if(games.length === user.games.length) {
-                  res.render('user', {user:user, games:games, errors:errors});
+                  res.render('profile', {user:user, games:games, errors:errors});
                 }
               });
             }
@@ -60,7 +60,7 @@ exports.index = function(req, res) {
         }
       }
       else {
-        res.render('user', {user:user, games:[], errors:errors})
+        res.render('profile', {user:user, games:[], errors:errors})
       }
     }
     else {

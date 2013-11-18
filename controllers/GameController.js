@@ -2,7 +2,7 @@ var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
 var User = require('../models/User.js');
 
-var smsClient = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+var smsClient = require('twilio');
 var smtpTransport = require('nodemailer').createTransport('SMTP',{
   service: 'Gmail',
   auth: {
@@ -12,27 +12,66 @@ var smtpTransport = require('nodemailer').createTransport('SMTP',{
 });
 
 exports.index = function(req, res) {
-  var compiledGames = [];
-  Game.find({finished:true})
-  .limit(10)
-  .exec(function(err, games) {
-    games.forEach(function(game) {
-      Sentence.find({game:game._id})
-      .sort({created_at:'asc'})
-      .exec(function(err, sentences) {
-        var content = '';
-        sentences.forEach(function(sentence) {
-          content += sentence.content + ' ';
-        });
+  User.findOne({username:req.session.username}, function(err, user) {
+    var games = [];
+    var errors = req.session.errors;
+    req.session.errors = {};
+    if(req.session.username) {
+      if(user.games.length) {
+        for(var i=0; i<user.games.length; i++) {
+          Game.findById(user.games[i], function(err, game) {
+            var turnsLeft = game.players.length*game.turnsPer - game.turnsElapsed;
+            var gameData = {
+              id:game._id,
+              currentPlayer:game.players[game.currentPlayer],
+              players:game.players,
+              turnsLeft:turnsLeft,
+              finished:game.finished
+            };
+            if(game.finished) {
+              Sentence.find({game:game._id})
+              .sort({created_at:'asc'})
+              .exec(function(err, sentences) {
+                var content = '';
+                sentences.forEach(function(sentence) {
+                  content += sentence.content + ' ';
+                });
 
-        compiledGames.push({id:game._id, content:content});
-        if(compiledGames.length === games.length) {
-          res.render('browsegames', {games:compiledGames});
+                gameData.content = content;
+                games.push(gameData);
+                if(games.length === user.games.length) {
+                  res.render('gamelist', {user:user, games:games, errors:errors});
+                }
+              });
+            }
+            else {
+              Sentence.find({game:game._id})
+              .sort({created_at:'desc'})
+              .limit(1)
+              .exec(function(err, sentence) {
+                gameData.sentence = sentence[0] ? sentence[0].content : null;
+                games.push(gameData);
+                if(games.length === user.games.length) {
+                  res.render('gamelist', {user:user, games:games, errors:errors});
+                }
+              });
+            }
+          });
         }
-      });
-    });
+      }
+      else {
+        res.render('gamelist', {user:user, games:[], errors:errors})
+      }
+    }
+    else {
+      res.render('index', {errors:errors});
+    }
   });
 };
+
+exports.showGame = function(req, res) {
+
+}
 
 exports.createGame = function(req, res) {
   var players = [];

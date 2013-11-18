@@ -1,52 +1,148 @@
-.hero-unit {
-  margin-top: 30px;
-  background-color: #add8e6;
+body {
+  background: url("/images/wood_nortago.jpg");
+  color: #fff;
+  font-family: helvetica;
 }
-.hero-unit h1 {
+.page {
+  margin: 50px 0;
+}
+.page h1,
+.page h2,
+.page h3,
+.page p {
+  padding: 0;
   margin: 0;
 }
-a.navbar-text {
-  color: #08c;
+.page label,
+.page input {
+  padding: 2px;
 }
-.form-group,
-.group {
-  margin: 10px 0;
-  padding: 5px;
-  border: 1px solid #eee;
-  border-radius: 5px;
+.page-header {
+  padding: 50px 55px 30px;
+  position: relative;
+  height: 20px;
+  border: 1px solid #b5b5b5;
+  border-bottom: 1px solid #dfe8ec;
+  background: #fff;
+  background-size: 100% 30px;
+  font: 24px 'AmericanTypewriter', Cambria, Georgia;
+  color: #282625;
+  margin: 0 auto;
+  width: 600px;
+  line-height: 30px;
 }
-label {
-  font-weight: bold;
-}
-.checkbox label {
-  font-weight: normal;
-}
-.navbar .user {
-  display: block;
-  line-height: 20px;
-  margin-top: 5px;
-}
-.navbar .signout {
-  display: block;
-  line-height: 20px;
-  margin-bottom: 5px;
-}
-.navbar .brand {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.navbar-inner {
-  height: 51px;
-}
-.row-fluid {
+.page-header:after {
+  content: '';
+  border-left: 1px solid #f8d3d3;
   position: absolute;
+  top: 0;
+  left: 39px;
+  bottom: 0;
 }
-.navbar .navbar-btn {
-  margin: 10px;
+.page-body {
+  padding: 3px 55px 30px;
+  position: relative;
+  border: 1px solid #b5b5b5;
+  border-top: none;
+  background: #fff;
+  background: -webkit-linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  background: -moz-linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  background: linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  -webkit-background-size: 100% 30px;
+  -moz-background-size: 100% 30px;
+  -ms-background-size: 100% 30px;
+  background-size: 100% 30px;
+  font: 16px 'AmericanTypewriter', Cambria, Georgia;
+  color: #282625;
+  margin: 0 auto;
+  width: 600px;
+  line-height: 30px;
 }
-.hero-unit .panel {
-  margin-top: 50px;
+.page-body:after {
+  content: '';
+  border-left: 1px solid #f8d3d3;
+  position: absolute;
+  top: 0;
+  left: 39px;
+  bottom: 0;
 }
-.game .text-warning {
-  color: #b94a48;
+.notecard {
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  text-align: left;
+  padding: 0 30px 30px;
+  position: relative;
+  border: 1px solid #b5b5b5;
+  background: #fff;
+  background: -webkit-linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  background: -moz-linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  background: linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  -webkit-background-size: 100% 30px;
+  -moz-background-size: 100% 30px;
+  -ms-background-size: 100% 30px;
+  background-size: 100% 30px;
+  font: 16px 'AmericanTypewriter', Cambria, Georgia;
+  color: #282625;
+  width: 250px;
+  height: 150px;
+  margin: 10px 20px;
+  display: inline-block;
+  line-height: 30px;
+  vertical-align: top;
+}
+.notecard h1,
+.notecard h2,
+.notecard h3,
+.notecard h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0;
+  margin: 0;
+}
+.notecard p {
+  padding: 0;
+  margin: 0;
+}
+.notecard p {
+  margin: 0;
+}
+.notecard.category {
+  cursor: pointer;
+  z-index: 1;
+}
+.notecard:after {
+  content: '';
+  border-top: 1px solid #f8d3d3;
+  position: absolute;
+  top: 27px;
+  right: 0;
+  left: 0;
+}
+.notecard-wrapper {
+  text-align: center;
+}
+form {
+  width: 250px;
+  margin: 0 25px;
+  display: inline-block;
+}
+input {
+  float: right;
+  width: 150px;
+  background: none;
+  border: 1px dashed #000;
+  font: 16px 'AmericanTypewriter', Cambria, Georgia;
+}
+input[type='submit'] {
+  width: 156px;
+}
+ul {
+  margin: 0;
+}
+.group {
+  transition: height 0.5s;
+  -webkit-transition: height 0.5s;
+  position: relative;
+  display: block;
 }

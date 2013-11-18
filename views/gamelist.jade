@@ -1,0 +1,43 @@
+extends layout
+block content
+  h1 Stories
+  div.notecard-wrapper
+    -var hasFinished = false
+    -var userTurn = false
+    -var notUserTurn = false
+    -games.forEach(function(game) {
+      -if(game.finished) hasFinished = true
+      -else if(game.currentPlayer === user.username) userTurn = true
+      -else notUserTurn = true
+    -})
+
+    -if(userTurn)
+      div.group
+        div.notecard.category
+          h2 your turn
+          p click to toggle
+        -games.forEach(function(game) {
+          -if(game.currentPlayer === user.username && !game.finished)
+            include game
+        -})
+    -if(notUserTurn)
+      div.group
+        div.notecard.category
+          h2 not your turn
+          p click to toggle
+        -games.forEach(function(game) {
+          -if(game.currentPlayer !== user.username && !game.finished)
+            include game
+        -})
+    -if(hasFinished)
+      div.group
+        div.notecard.category
+          h2 finished
+          p click to toggle
+        -games.forEach(function(game) {
+          -if(game.finished)
+            include game
+        -})
+
+  script(src='/libs/jquery-1.10.2.min.js')
+  script(src='/scripts/games.js')

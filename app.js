@@ -41,7 +41,8 @@ app.post('/addfriend', users.addFriend);
 app.get('/verify/:code', users.addEmail);
 app.post('/addemail', users.addEmail);
 app.post('/addphone', users.addPhone);
-app.get('/browse', games.index);
+app.get('/games', games.index);
+app.get('/game/:id', games.showGame)
 app.post('/game/new', games.createGame);
 app.post('/game', games.addSentence);
 
