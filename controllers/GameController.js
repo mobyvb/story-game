@@ -235,11 +235,17 @@ exports.addSentence = function(req,res) {
                   to:'+'+user.phone,
                   from: '+18036102184',
                   body: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn.'
-                });
-                smsClient.sendMessage({
-                  to:'+'+user.phone,
-                  from: '+18036102184',
-                  body: 'Direct link to game:  http://stories.mobyvb.com/game/'+game._id
+                }, function(error, message) {
+                  if (error) {
+                    console.error('Dagnabit.  We couldn\'t send the message');
+                  }
+                  else {
+                    smsClient.sendMessage({
+                      to:'+'+user.phone,
+                      from: '+18036102184',
+                      body: 'Direct link to game:  http://stories.mobyvb.com/game/'+game._id
+                    });
+                  }
                 });
               }
             });
