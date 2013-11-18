@@ -2,6 +2,7 @@ body {
   background: url("/images/wood_nortago.jpg");
   color: #fff;
   font-family: helvetica;
+  margin: 0;
 }
 .page {
   margin: 50px 0;
@@ -145,4 +146,55 @@ ul {
   -webkit-transition: height 0.5s;
   position: relative;
   display: block;
+}
+.heading {
+  text-align: center;
+  padding: 5px;
+  overflow: auto;
+  border: 1px solid #b5b5b5;
+  background: #fff;
+  background: -webkit-linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  background: -moz-linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  background: linear-gradient(top, #dfe8ec 0%, #fff 8%) 0 57px;
+  -webkit-background-size: 100% 30px;
+  -moz-background-size: 100% 30px;
+  -ms-background-size: 100% 30px;
+  background-size: 100% 30px;
+  font: 16px 'AmericanTypewriter', Cambria, Georgia;
+  color: #282625;
+}
+.heading h1,
+.heading h2,
+.heading h3,
+.heading p {
+  padding: 0;
+  margin: 0;
+}
+.heading * {
+  display: inline-block;
+}
+.heading a {
+  text-decoration: none;
+  color: #282625;
+}
+.heading .title {
+  float: left;
+}
+.heading .nav-container {
+  padding-top: 5px;
+  width: 250px;
+  text-align: center;
+}
+.heading .nav-container * {
+  margin: 0 10px;
+}
+.heading .user {
+  text-align: right;
+  float: right;
+}
+.heading .user * {
+  display: block;
+}
+.heading .user a {
+  color: #87ceeb;
 }

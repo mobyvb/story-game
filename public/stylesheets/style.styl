@@ -2,6 +2,7 @@ body
   background url('/images/wood_nortago.jpg')
   color white
   font-family helvetica
+  margin 0
 
 .page
   margin 50px 0
@@ -122,3 +123,42 @@ ul
   -webkit-transition: height 0.5s
   position relative
   display block
+
+.heading
+  text-align center
+  h1, h2, h3, p
+    padding 0
+    margin 0
+  padding 5px
+  overflow auto
+  border: 1px solid #B5B5B5;
+  background: white;
+  background: -webkit-linear-gradient(top, #DFE8EC 0%, white 8%) 0 57px;
+  background: -moz-linear-gradient(top, #DFE8EC 0%, white 8%) 0 57px;
+  background: linear-gradient(top, #DFE8EC 0%, white 8%) 0 57px;
+  -webkit-background-size: 100% 30px;
+  -moz-background-size: 100% 30px;
+  -ms-background-size: 100% 30px;
+  background-size: 100% 30px;
+  font: 16px 'AmericanTypewriter', Cambria, Georgia
+  color: #282625
+  & *
+    display inline-block
+  & a
+    text-decoration none
+    color #282625
+  & .title
+    float left
+  & .nav-container
+    padding-top 5px
+    width 250px
+    text-align center
+    & *
+      margin 0 10px
+  & .user
+    text-align right
+    float right
+    & *
+      display block
+    & a
+      color skyblue

@@ -4,4 +4,17 @@ html
     title story game
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    -if(user)
+      div.heading
+        div.title
+          h1 stories
+        div.nav-container
+          a(href='/games').nav-link
+            h2 games
+          a(href='/profile').nav-link
+            h2 profile
+        div.user
+          h3= 'logged in as ' + user.username
+          a(href='/signout')
+            h3 sign out
     block content

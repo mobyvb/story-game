@@ -34,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect(uristring);
 
 app.get('/', users.index);
+app.get('/profile', users.profile);
 app.post('/signup', users.signup);
 app.post('/signin', users.signin);
 app.get('/signout', users.signout);
