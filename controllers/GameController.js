@@ -218,7 +218,7 @@ exports.addSentence = function(req,res) {
                   from: 'Story Game <mvb.story.game@gmail.com>', // sender address
                   to: user.email, // list of receivers
                   subject: 'It\'s your turn!', // Subject line
-                  text: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn.'
+                  text: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn. http://stories.mobyvb.com/game/'+game._id
                 };
 
                 smtpTransport.sendMail(mailOptions, function(error, response) {
@@ -234,7 +234,7 @@ exports.addSentence = function(req,res) {
                 smsClient.sendMessage({
                   to:'+'+user.phone,
                   from: '+18036102184',
-                  body: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn.'
+                  body: 'Hey, ' + nextPlayerName + '! ' + currentPlayerName + ' just submitted a sentence for a story you\'re participating in, and now it\'s your turn. http://stories.mobyvb.com/game/'+game._id
                 });
               }
             });
