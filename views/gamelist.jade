@@ -1,6 +1,5 @@
 extends layout
 block content
-  h1 Stories
   div.notecard-wrapper
     -var hasFinished = false
     -var userTurn = false
@@ -15,7 +14,7 @@ block content
       div.group
         div.notecard.category
           h2 your turn
-          p click to toggle
+          p click to show/hide games
         -games.forEach(function(game) {
           -if(game.currentPlayer === user.username && !game.finished)
             include gamecard
@@ -24,7 +23,7 @@ block content
       div.group
         div.notecard.category
           h2 not your turn
-          p click to toggle
+          p click to show/hide games
         -games.forEach(function(game) {
           -if(game.currentPlayer !== user.username && !game.finished)
             include gamecard
@@ -33,7 +32,7 @@ block content
       div.group
         div.notecard.category
           h2 finished
-          p click to toggle
+          p click to show/hide games
         -games.forEach(function(game) {
           -if(game.finished)
             include gamecard

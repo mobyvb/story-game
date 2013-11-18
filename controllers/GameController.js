@@ -120,7 +120,7 @@ exports.createGame = function(req, res) {
     if(turnsPer >= 1) {
       new Game({players:players, turnsPer:turnsPer}).save(function(err, game) {
         if(err) {
-          res.redirect('/');
+          res.redirect('/games');
         }
         else {
           players.forEach(function(player) {
@@ -130,18 +130,18 @@ exports.createGame = function(req, res) {
             });
           });
 
-          res.redirect('/');
+          res.redirect('/game/'+game._id);
         }
       });
     }
     else {
       req.session.errors = {newgame:['turns per player must be a number that is one or greater']};
-      res.redirect('/');
+      res.redirect('/games');
     }
   }
   else {
     req.session.errors = {newgame:['you must add at least one other player']};
-    res.redirect('/');
+    res.redirect('/games');
   }
 };
 
@@ -158,7 +158,7 @@ exports.addSentence = function(req,res) {
           }).save(function(err) {
           if(err) {
             console.log(err);
-            res.redirect('/');
+            res.redirect('/game/'+game._id);
           }
           else {
             game.currentPlayer++;
@@ -194,7 +194,7 @@ exports.addSentence = function(req,res) {
               }
             });
 
-            res.redirect('/');
+            res.redirect('/games');
           }
         });
       }
