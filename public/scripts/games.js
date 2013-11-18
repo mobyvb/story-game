@@ -20,11 +20,11 @@ function uncollapseCards(category) {
 }
 function collapseCards(category) {
   card = $(category);
-  var center = $('body').width()/2 - card.width()/2 - card.position().left - 60;
+  var center = $(window).width()/2 - card.width()/2 - card.position().left - 60;
   card.css('left', center+'px');
   card.siblings().children('.notecard').each(function(index, notecard) {
     notecard = $(notecard);
-    center = $('body').width()/2 - notecard.width()/2 - notecard.position().left - 60;
+    center = $(window).width()/2 - notecard.width()/2 - notecard.position().left - 60;
     notecard.css('left', center+'px');
     notecard.css('top', -notecard.position().top+'px');
   });

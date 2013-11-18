@@ -18,7 +18,7 @@ block content
           p click to toggle
         -games.forEach(function(game) {
           -if(game.currentPlayer === user.username && !game.finished)
-            include game
+            include gamecard
         -})
     -if(notUserTurn)
       div.group
@@ -27,7 +27,7 @@ block content
           p click to toggle
         -games.forEach(function(game) {
           -if(game.currentPlayer !== user.username && !game.finished)
-            include game
+            include gamecard
         -})
     -if(hasFinished)
       div.group
@@ -36,7 +36,7 @@ block content
           p click to toggle
         -games.forEach(function(game) {
           -if(game.finished)
-            include game
+            include gamecard
         -})
 
   script(src='/libs/jquery-1.10.2.min.js')

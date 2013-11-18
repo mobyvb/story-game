@@ -64,13 +64,48 @@ exports.index = function(req, res) {
       }
     }
     else {
-      res.render('index', {errors:errors});
+      res.redirect('/');
     }
   });
 };
 
 exports.showGame = function(req, res) {
+  var errors = req.session.errors;
+  Game.findById(req.params.id, function(err, game) {
+    var turnsLeft = game.players.length*game.turnsPer - game.turnsElapsed;
+    var gameData = {
+      id:game._id,
+      currentPlayer:game.players[game.currentPlayer],
+      players:game.players,
+      turnsLeft:turnsLeft,
+      finished:game.finished
+    };
+    if(game.finished) {
+      Sentence.find({game:game._id})
+      .sort({created_at:'asc'})
+      .exec(function(err, sentences) {
+        var content = '';
+        sentences.forEach(function(sentence) {
+          content += sentence.content + ' ';
+        });
 
+        gameData.content = content;
+        res.render('game', {user:req.session.username, game:gameData, errors:errors});
+      });
+    }
+    else {
+      if(!req.session.username || req.session.username!==gameData.currentPlayer) {
+        res.redirect('/games');
+      }
+      Sentence.find({game:game._id})
+      .sort({created_at:'desc'})
+      .limit(1)
+      .exec(function(err, sentence) {
+        gameData.sentence = sentence[0] ? sentence[0].content : null;
+        res.render('game', {user:req.session.username, game:gameData, errors:errors});
+      });
+    }
+  });
 }
 
 exports.createGame = function(req, res) {

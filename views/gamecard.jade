@@ -1,0 +1,12 @@
+a(href='/game/'+game.id)
+  div.notecard
+    h4= game.players.join(', ')
+    -if(game.finished)
+      p This game is finished. Click to view the story.
+    -else
+      -if(game.currentPlayer === user.username)
+        p= 'Turns left: ' + game.turnsLeft
+        p It's your turn. Click to play.
+      -else
+        p= 'Turns left: ' + game.turnsLeft
+        p= 'It is ' + game.currentPlayer + '\'s turn.'
