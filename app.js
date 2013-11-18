@@ -26,7 +26,19 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
-app.use(express.session({secret:'something', cookie: {maxAge:2*365*24*60*60*1000}}));
+app.use(express.session({
+  secret:'4J6YlRpJhFvgNmg',
+  cookie: {maxAge:2*365*24*60*60*1000},
+  store: new (require('express-sessions'))({
+    storage: 'mongodb',
+    instance: mongoose,
+    host: process.env.MONGO_HOST || 'localhost',
+    port: process.env.MONGO_PORT || 27017,
+    db: process.env.MONGO_DATABASE || 'story-game',
+    collection: 'sessions',
+    expire: 2*365*24*60*60*1000
+  })
+}));
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
