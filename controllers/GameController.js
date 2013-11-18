@@ -2,7 +2,7 @@ var Game = require('../models/Game.js');
 var Sentence = require('../models/Sentence.js');
 var User = require('../models/User.js');
 
-var smsClient = require('twilio');
+var smsClient = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 var smtpTransport = require('nodemailer').createTransport('SMTP',{
   service: 'Gmail',
   auth: {
