@@ -67,7 +67,7 @@ exports.signin = function(req, res) {
       user.comparePassword(req.body.password, function(err, isMatch) {
         if(err) {
           console.log(err);
-          res.redirect('/profile');
+          res.redirect('/');
         }
         else if(isMatch) {
           req.session.username = user.username;
@@ -75,13 +75,13 @@ exports.signin = function(req, res) {
         }
         else {
           req.session.errors = {signin:['incorrect username or password']};
-          res.redirect('/profile');
+          res.redirect('/');
         }
       });
     }
     else {
       req.session.errors = {signin:[req.body.username + ' doesn\'t exist']};
-      res.redirect('/profile');
+      res.redirect('/');
     }
   });
 };
