@@ -104,7 +104,7 @@ exports.showGame = function(req, res) {
         .limit(1)
         .exec(function(err, sentence) {
           gameData.sentence = sentence[0] ? sentence[0].content : null;
-          res.render('game', {user:req.session.username, game:gameData, errors:errors});
+          res.render('game', {user:{username:req.session.username}, game:gameData, errors:errors});
         });
       }
     }
