@@ -240,3 +240,7 @@ ul.friends {
 h3.page-subheader {
   margin: 0 25px;
 }
+a {
+  color: #87ceeb;
+  text-decoration: none;
+}
