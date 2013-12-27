@@ -1,6 +1,8 @@
 Story Game
 ==========
 A web based adaptation of a game involving a piece of paper being passed around to create a story
+
+Available at http://stories.mobyvb.com/
 Rules
 -----
 * A group of three or more people starts with a blank sheet of paper
